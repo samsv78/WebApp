@@ -8,4 +8,5 @@ public interface IUserService
 {
     Task CreateUser(CreateUserCommand request);
     Task<List<UserInfo>> GetUser(long? id);
+    Task DeleteUser(DeleteUserCommand request);
 }

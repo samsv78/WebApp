@@ -54,6 +54,20 @@ public class UserService : IUserService
         return userInfos;
     }
 
+    public async Task DeleteUser(DeleteUserCommand request)
+    {
+        var user = await _userRepository.GetUserByUsername(request.Username);
+        if (user == null)
+        {
+            throw new Exception("Username " + request.Username + " not found in users.");
+        }
+        if (AES.Encrypt(request.Password) != user.Password)
+        {
+            throw new Exception("Wrong password.");
+        }
+        await _userRepository.DeleteUser(user);
+    }
+
     private UserInfo GetUserInfo(User user)
     {
         var userInfo = new UserInfo

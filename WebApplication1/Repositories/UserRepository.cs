@@ -36,4 +36,10 @@ public class UserRepository : IUserRepository
         var user = await _context.User.FirstOrDefaultAsync(p => p.Id == id);
         return user;
     }
+
+    public async Task DeleteUser(User user)
+    {
+        _context.User.Remove(user);
+        await _context.SaveChangesAsync();
+    }
 }

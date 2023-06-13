@@ -35,5 +35,17 @@ public class UserController : ControllerBase
         var res = await _mediator.Send(query);
         return Ok(res);
     }
+    
+    [HttpDelete("DeleteUser")]
+    public async Task<IActionResult> DeleteUser(DeleteUserRequest deleteUserRequest)
+    {
+        var command = new DeleteUserCommand
+            (
+                deleteUserRequest.Username,
+                deleteUserRequest.Password
+            );
+        await _mediator.Send(command);
+        return Ok();
+    }
 
 }
