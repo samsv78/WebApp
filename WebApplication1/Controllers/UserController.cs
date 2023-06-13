@@ -22,7 +22,7 @@ public class UserController : ControllerBase
         (
             createUserRequest.FirstName,
             createUserRequest.LastName,
-            createUserRequest.UserName,
+            createUserRequest.Username,
             createUserRequest.Password
         );
         await _mediator.Send(command);
@@ -34,6 +34,22 @@ public class UserController : ControllerBase
         var query = new GetUserQuery(id);
         var res = await _mediator.Send(query);
         return Ok(res);
+    }
+    
+    [HttpPut("UpdateUser")]
+    public async Task<IActionResult> UpdateUser(UpdateUserRequest updateUserRequest)
+    {
+        var command = new UpdateUserCommand
+        (
+            updateUserRequest.FirstName,
+            updateUserRequest.LastName,
+            updateUserRequest.OldUserName,
+            updateUserRequest.Username,
+            updateUserRequest.OldPassword,
+            updateUserRequest.Password
+        );
+        await _mediator.Send(command);
+        return Ok();
     }
     
     [HttpDelete("DeleteUser")]

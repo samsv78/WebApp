@@ -18,11 +18,11 @@ public class UserService : IUserService
 
     public async Task CreateUser(CreateUserCommand request)
     {
-        await CheckUsernameAvailability(request.UserName);
+        await CheckUsernameAvailability(request.Username);
         var user = new User(
             request.FirstName,
             request.LastName,
-            request.UserName,
+            request.Username,
             AES.Encrypt(request.Password)
         );
         await _userRepository.CreateUser(user);
@@ -66,6 +66,43 @@ public class UserService : IUserService
             throw new Exception("Wrong password.");
         }
         await _userRepository.DeleteUser(user);
+    }
+
+    public async Task UpdateUser(UpdateUserCommand request)
+    {
+        var user = await _userRepository.GetUserByUsername(request.OldUsername);
+        if (user == null)
+        {
+            throw new Exception("Username " + request.Username + " not found in users.");
+        }
+        if (AES.Encrypt(request.OldPassword) != user.Password)
+        {
+            throw new Exception("Wrong password.");
+        }
+        if (request.Username != null && request.Username != user.Username)
+        {
+            await CheckUsernameAvailability(request.Username);
+            user.Username = request.Username;
+        }
+        if (request.FirstName != null)
+        {
+            user.FirstName = request.FirstName;
+        }
+        if (request.LastName != null)
+        {
+            user.LastName = request.LastName;
+        }
+        if (request.LastName != null)
+        {
+            user.LastName = request.LastName;
+        }
+        if (request.Password != null)
+        {
+            user.Password = AES.Encrypt(request.Password);
+        }
+        user.UpdateDate = DateTime.Now;
+        await _userRepository.UpdateUser(user);
+
     }
 
     private UserInfo GetUserInfo(User user)

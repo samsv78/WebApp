@@ -9,11 +9,11 @@ public class CreateUserCommand : IRequest
     {
         FirstName = firstName;
         LastName = lastName;
-        UserName = userName;
+        Username = userName;
         Password = password;
     }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string UserName { get; set; }
+    public string Username { get; set; }
     public string Password { get; set; }
 }
