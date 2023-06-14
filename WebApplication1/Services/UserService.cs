@@ -23,7 +23,7 @@ public class UserService : IUserService
             request.FirstName,
             request.LastName,
             request.Username,
-            AES.Encrypt(request.Password)
+            CAes.Encrypt(request.Password)
         );
         await _userRepository.CreateUser(user);
     }
@@ -61,7 +61,7 @@ public class UserService : IUserService
         {
             throw new Exception("Username " + request.Username + " not found in users.");
         }
-        if (AES.Encrypt(request.Password) != user.Password)
+        if (CAes.Encrypt(request.Password) != user.Password)
         {
             throw new Exception("Wrong password.");
         }
@@ -75,7 +75,7 @@ public class UserService : IUserService
         {
             throw new Exception("Username " + request.Username + " not found in users.");
         }
-        if (AES.Encrypt(request.OldPassword) != user.Password)
+        if (CAes.Encrypt(request.OldPassword) != user.Password)
         {
             throw new Exception("Wrong password.");
         }
@@ -98,7 +98,7 @@ public class UserService : IUserService
         }
         if (request.Password != null)
         {
-            user.Password = AES.Encrypt(request.Password);
+            user.Password = CAes.Encrypt(request.Password);
         }
         user.UpdateDate = DateTime.Now;
         await _userRepository.UpdateUser(user);

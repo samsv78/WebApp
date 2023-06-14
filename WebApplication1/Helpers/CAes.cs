@@ -1,17 +1,15 @@
-using System;
-using System.IO;
 using System.Security.Cryptography;
 
 namespace WebApplication1.Helpers
 {
-    public class AES {
+    public class CAes {
         
         static readonly string Password = string.Empty;
         private const int Bits = 128;
         private static byte[] Encrypt(byte[] clearData, byte[] key, byte[] iv) {
             var ms = new MemoryStream();
 
-            var alg = Rijndael.Create();
+            var alg = Aes.Create();
             alg.Key = key;
 
             alg.IV = iv;
@@ -46,7 +44,7 @@ namespace WebApplication1.Helpers
         }
         private static byte[] Decrypt(byte[] cipherData, byte[] key, byte[] iv) {
             var ms = new MemoryStream();
-            var alg = Rijndael.Create();
+            var alg = Aes.Create();
             alg.Key = key;
             alg.IV = iv;
             var cs = new CryptoStream(ms, alg.CreateDecryptor(), CryptoStreamMode.Write);
