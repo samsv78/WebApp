@@ -1,3 +1,5 @@
+.idea/
 /WebApplication1/obj/
 /WebApplication1/bin/
-.idea/
+/WebApplication1.Test/obj/
+/WebApplication1.Test/bin/
