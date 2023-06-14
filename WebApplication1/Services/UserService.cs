@@ -73,7 +73,7 @@ public class UserService : IUserService
         var user = await _userRepository.GetUserByUsername(request.OldUsername);
         if (user == null)
         {
-            throw new Exception("Username " + request.Username + " not found in users.");
+            throw new Exception("Username " + request.OldUsername + " not found in users.");
         }
         if (CAes.Encrypt(request.OldPassword) != user.Password)
         {
