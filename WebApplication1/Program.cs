@@ -12,8 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    // var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    // options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseInMemoryDatabase("TestDb");
 });
 //Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -43,3 +44,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
